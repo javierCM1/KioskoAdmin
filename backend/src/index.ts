@@ -1,0 +1,34 @@
+import express, { Application, Request, Response } from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import {prisma} from './config/db'; 
+import authRoutes from './routes/auth.routes';
+import productRoutes from './routes/product.routes';
+
+dotenv.config();
+
+const app: Application = express();
+const PORT = 3000;
+
+
+app.use(cors()); 
+app.use(express.json());
+
+
+app.get('/health', async (req: Request, res: Response) => {
+  try {
+    // Verificamos de paso la conexión a la base de datos
+    await prisma.$queryRaw`SELECT 1`;
+    res.status(200).json({ status: 'OK', database: 'Connected' });
+  } catch (error) {
+    res.status(500).json({ status: 'Error', database: 'Disconnected' });
+  }
+});
+
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+
+
+app.listen(PORT, () => {
+  console.log(`🚀 Kiosk-Manager API corriendo en: http://localhost:${PORT}`);
+});
