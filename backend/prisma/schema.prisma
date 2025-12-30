@@ -31,4 +31,24 @@ model Product {
   imagePath   String?  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  sales       SaleItem[]
+}
+
+model Sale {
+  id        Int        @id @default(autoincrement())
+  total     Decimal    @db.Decimal(10, 2)
+  items     SaleItem[]
+  createdAt DateTime   @default(now())
+}
+
+model SaleItem {
+  id        Int     @id @default(autoincrement())
+  saleId    Int
+  productId Int
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2) // Precio al momento de la venta
+
+  sale    Sale    @relation(fields: [saleId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 }
