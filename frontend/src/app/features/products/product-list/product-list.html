@@ -1,0 +1,45 @@
+<div class="table-container">
+
+
+  <button class="btn-add" routerLink="/products/create">Agregar Producto</button>
+  @if (products$ | async; as productList) {
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of productList; track item.id) {
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>${{ item.sellPrice }}</td>
+            <td>{{ item.stock }}</td>
+            <td>
+              @if (item.stock > 10) {
+                <span class="badge ok">Disponible</span>
+              } @else if (item.stock > 0) {
+                <span class="badge warning">Bajo Stock</span>
+              } @else {
+                <span class="badge error">Sin Stock</span>
+              }
+            </td>
+            <td>
+              <button class="btn-edit" [routerLink]="['/products/edit', item.id]">Editar</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="empty-state">No hay productos cargados.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <div class="loading">Cargando inventario...</div>
+  }
+</div>

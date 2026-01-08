@@ -5,7 +5,7 @@ import {prisma} from './config/db';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import saleRoutes from './routes/sale.routes';
-
+import path from 'path';
 
 dotenv.config();
 
@@ -29,6 +29,7 @@ app.get('/health', async (req: Request, res: Response) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/sales', saleRoutes);
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 app.listen(PORT, () => {
   console.log(`🚀 Kiosk-Manager API corriendo en: http://localhost:${PORT}`);

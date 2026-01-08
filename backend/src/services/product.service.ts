@@ -2,18 +2,33 @@
 
 
 export class ProductService {
-  static async createProduct(data: { name: string; price: number; stock: number; category: string; imagePath?: string }) {
-    // Validamos que el precio no sea negativo (Objetividad estratégica)
-    if (data.price <= 0) throw new Error("El precio debe ser mayor a cero");
+  
+  static async createProduct(data: { 
+  barcode?: string; 
+  name: string; 
+  buyPrice: number; 
+  sellPrice: number; 
+  stock: number; 
+  category: string; 
+  imagePath?: string 
+}) {
+  
+  // 1. Validaciones de lógica
+  if (data.buyPrice < 0) throw new Error("El precio de compra no puede ser negativo");
 
-    return await prisma.product.create({
-      data: {
-        ...data,
-        price: data.price // Prisma manejará la conversión a Decimal
-      }
-    });
-  }
-
+  // 2. Creación en base de datos
+  return await prisma.product.create({
+    data: {
+      name: data.name,
+      barcode: data.barcode || null, // Prisma prefiere null a undefined para campos opcionales
+      buyPrice: data.buyPrice, // Prisma convertirá el number a Decimal automáticamente si el valor es numérico
+      sellPrice: data.sellPrice,
+      stock: data.stock,
+      category: data.category,
+      imagePath: data.imagePath || null
+    }
+  });
+}
   static async getAllProducts() {
     return await prisma.product.findMany({
       orderBy: { createdAt: 'desc' }

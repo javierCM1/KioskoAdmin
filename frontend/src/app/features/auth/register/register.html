@@ -1,0 +1,33 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>Crear Cuenta - Kiosko</h2>
+    <p>Regístrate para empezar a gestionar tu inventario</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <label>Nombre Completo</label>
+        <input type="text" formControlName="name" placeholder="Tu nombre">
+      </div>
+
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" formControlName="email" placeholder="correo@ejemplo.com">
+      </div>
+
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" formControlName="password" placeholder="Min. 6 caracteres">
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid">
+        Registrarse
+      </button>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <div class="footer">
+        ¿Ya tienes cuenta? <a routerLink="/login">Inicia Sesión</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -4,24 +4,29 @@ export class ProductController {
 
     constructor() {}    
 
-    public createProduct = async (req: any, res: any) => {
+  // En tu ProductController
+public createProduct = async (req: any, res: any) => {
+    try {
+        const { name, barcode, category, buyPrice, sellPrice, stock } = req.body;
+        const imagePath = req.file ? `/uploads/${req.file.filename}` : undefined;
 
-        const { name,price, stock, imagePath,category } = req.body;
+        // PARSEO CRÍTICO: FormData siempre envía strings.
+        const product = await ProductService.createProduct({
+            name,
+            barcode,
+            category,
+            imagePath,
+            buyPrice: Number(buyPrice), // Forzar a número
+            sellPrice: Number(sellPrice), // Forzar a número
+            stock: Number(stock) // Forzar a número
+        });
 
-        if (!name ||  price == null || stock == null || !category) {
-            return res.status(400).json({ message: "All product fields are required" });
-        }
-        try {           
-            
-            const product = await ProductService.createProduct({ name, price,category, stock, imagePath });
-            return res.status(201).json({ message: "Product created successfully", product });
-        }   catch (error: any) {
-            return res.status(500).json({ message: error.message });
-        }
-
-
+        res.status(201).json({ message: "Guardado", product });
+    } catch (error: any) {
+        console.error("LOG DEL SERVIDOR:", error); // ESTO te dirá la verdad en la terminal
+        res.status(500).json({ message: error.message });
     }
-
+}
     public getAllProducts = async (req: any, res: any) => { 
 
         try {

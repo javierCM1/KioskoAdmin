@@ -1,0 +1,74 @@
+<div class="form-wrapper">
+  <div class="form-card">
+    <header>
+      <h1>Nuevo Producto</h1>
+      <p>Completa los datos del inventario</p>
+    </header>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Código de Barras (Opcional)</label>
+        <input type="text" formControlName="barcode" placeholder="Escanea o escribe el código">
+      </div>
+
+      <div class="form-group">
+        <label>Nombre del Producto *</label>
+        <input type="text" formControlName="name" placeholder="Ej: Alfajor Oreo">
+        @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+          <small class="error-text">El nombre debe tener al menos 3 caracteres</small>
+        }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Precio Compra ($) *</label>
+          <input type="number" formControlName="buyPrice">
+        </div>
+        <div class="form-group">
+          <label>Precio Venta ($) *</label>
+          <input type="number" formControlName="sellPrice">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cantidad (Stock) *</label>
+          <input type="number" formControlName="stock">
+        </div>
+        <div class="form-group">
+          <label>Categoría (Opcional)</label>
+          <input type="text" formControlName="category" placeholder="Ej: Golosinas">
+        </div>
+      </div>
+
+      <div class="form-group">
+  <label>Imagen del Producto</label>
+  <div class="file-upload">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput hidden>
+    
+    <button type="button" class="btn-upload" (click)="fileInput.click()">
+      {{ selectedFile ? 'Cambiar Imagen' : 'Seleccionar Imagen' }}
+    </button>
+
+    @if (selectedFile) {
+      <span class="file-name">{{ selectedFile.name }}</span>
+    }
+  </div>
+
+  @if (imagePreview) {
+    <div class="preview-container">
+      <img [src]="imagePreview" alt="Vista previa">
+      <button type="button" class="btn-remove" (click)="removeImage()">Eliminar</button>
+    </div>
+  }
+</div>
+
+     
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" routerLink="/products">Cancelar</button>
+        <button type="submit" class="btn-primary" [disabled]="productForm.invalid">Guardar Producto</button>
+      </div>
+    </form>
+  </div>
+</div>

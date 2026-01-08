@@ -14,7 +14,7 @@ export class SaleService {
         if (product.stock < item.quantity) throw new Error(`Stock insuficiente para ${product.name}`);
 
         // 2. Calcular subtotal y acumular el total
-        const subtotal = Number(product.price) * item.quantity;
+        const subtotal = Number(product.sellPrice) * item.quantity;
         total += subtotal;
 
         // 3. Descontar el stock (Crucial)
@@ -27,7 +27,7 @@ export class SaleService {
         saleItemsData.push({
           productId: product.id,
           quantity: item.quantity,
-          price: product.price
+          price: product.sellPrice
         });
       }
 

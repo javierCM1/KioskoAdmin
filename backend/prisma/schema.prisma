@@ -22,10 +22,13 @@ model User {
   createdAt DateTime @default(now())
 }
 
+
 model Product {
   id          Int      @id @default(autoincrement())
+  barcode     String?  @unique             // Código de barras (opcional pero único)
   name        String   @unique
-  price       Decimal  @db.Decimal(10, 2)
+  buyPrice    Decimal  @db.Decimal(10, 2)  // Lo que te costó a ti
+  sellPrice   Decimal  @db.Decimal(10, 2)  // A lo que lo vendes
   stock       Int      @default(0)
   category    String
   imagePath   String?  

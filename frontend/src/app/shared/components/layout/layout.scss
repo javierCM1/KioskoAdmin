@@ -1,0 +1,69 @@
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  background: #f8f9fa;
+
+  .sidebar {
+    width: 260px;
+    background: #2d3436;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .logo h2 {
+      color: #fff;
+      margin-bottom: 40px;
+      span { color: #0984e3; }
+    }
+
+    nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      a {
+        color: #b2bec3;
+        text-decoration: none;
+        padding: 12px;
+        border-radius: 8px;
+        transition: 0.3s;
+
+        &:hover, &.active {
+          background: #0984e3;
+          color: white;
+        }
+      }
+    }
+
+    .logout button {
+      width: 100%;
+      padding: 10px;
+      background: #d63031;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    .top-bar {
+      height: 60px;
+      background: white;
+      display: flex;
+      align-items: center;
+      padding: 0 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      font-weight: 600;
+    }
+
+    .content { padding: 30px; }
+  }
+}

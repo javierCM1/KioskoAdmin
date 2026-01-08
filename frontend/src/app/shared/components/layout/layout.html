@@ -1,0 +1,31 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="logo">
+      <h2>Kiosko<span>Pro</span></h2>
+    </div>
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <i class="icon-dashboard"></i> Dashboard
+      </a>
+      <a routerLink="/products" routerLinkActive="active">
+        <i class="icon-inventory"></i> Inventario
+      </a>
+      <a routerLink="/sales" routerLinkActive="active">
+        <i class="icon-sales"></i> Nueva Venta
+      </a>
+    </nav>
+    <div class="logout">
+      <button (click)="logout()">Cerrar Sesión</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-bar">
+      <span>Bienvenido, Administrador</span>
+    </header>
+    
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

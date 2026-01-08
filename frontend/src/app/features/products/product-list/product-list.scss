@@ -1,0 +1,35 @@
+.table-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    th {
+      background: #f1f2f6;
+      padding: 15px;
+      text-align: left;
+      font-size: 14px;
+      color: #2d3436;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #f1f2f6;
+      font-size: 14px;
+    }
+  }
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  &.ok { background: #e3fcef; color: #00b894; }
+  &.warning { background: #fff9db; color: #f1c40f; }
+  &.error { background: #fff5f5; color: #ff7675; }
+}
