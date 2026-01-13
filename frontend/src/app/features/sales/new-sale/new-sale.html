@@ -1,0 +1,63 @@
+<div class="sale-container">
+
+  <section class="products-section">
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Buscar por nombre o código de barras..."
+        [ngModel]="searchTerm()"
+        (ngModelChange)="searchTerm.set($event)">
+    </div>
+
+    <div class="products-grid">
+      @for (product of filteredProducts(); track product.id) {
+        <div class="product-card" (click)="addToCart(product)" [class.no-stock]="product.stock <= 0">
+          <div class="product-img">
+            @if (product.imagePath) {
+              <img [src]="'http://localhost:3000' + product.imagePath" alt="{{product.name}}">
+            } @else {
+              <div class="placeholder-img">📦</div>
+            }
+          </div>
+          <div class="product-info">
+            <span class="price">${{ product.sellPrice }}</span>
+            <h3>{{ product.name }}</h3>
+            <span class="stock">Stock: {{ product.stock }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <aside class="cart-sidebar">
+    <h2>Resumen de Venta</h2>
+
+    <div class="cart-items">
+      @for (item of cart(); track item.product.id) {
+        <div class="cart-item">
+          <div class="item-details">
+            <p>{{ item.product.name }}</p>
+            <small>{{ item.quantity }} x ${{ item.product.sellPrice }}</small>
+          </div>
+          <div class="item-actions">
+            <span class="subtotal">${{ item.quantity * item.product.sellPrice }}</span>
+            <button (click)="removeFromCart(item.product.id!)" class="btn-delete">&times;</button>
+          </div>
+        </div>
+      } @empty {
+        <p class="empty-msg">No hay productos seleccionados</p>
+      }
+    </div>
+
+    <div class="cart-footer">
+      <div class="total-row">
+        <span>Total:</span>
+        <span class="total-amount">${{ total() }}</span>
+      </div>
+      <button class="btn-confirm" [disabled]="cart().length === 0">
+        Confirmar Venta
+      </button>
+    </div>
+  </aside>
+
+</div>

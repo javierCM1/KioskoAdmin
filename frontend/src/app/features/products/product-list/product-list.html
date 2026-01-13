@@ -8,6 +8,7 @@
         <tr>
           <th>Producto</th>
           <th>Precio</th>
+          <th>costo</th>
           <th>Stock</th>
           <th>Estado</th>
           <th>Acciones</th>
@@ -18,6 +19,7 @@
           <tr>
             <td>{{ item.name }}</td>
             <td>${{ item.sellPrice }}</td>
+            <td>${{ item.buyPrice }}</td>
             <td>{{ item.stock }}</td>
             <td>
               @if (item.stock > 10) {

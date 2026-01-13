@@ -2,73 +2,111 @@
   <div class="form-card">
     <header>
       <h1>Nuevo Producto</h1>
-      <p>Completa los datos del inventario</p>
+      <p>Completa los datos para actualizar el inventario de tu kiosko</p>
     </header>
 
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
       <div class="form-group">
-        <label>Código de Barras (Opcional)</label>
-        <input type="text" formControlName="barcode" placeholder="Escanea o escribe el código">
+        <label for="barcode">Código de Barras (Opcional)</label>
+        <input
+          id="barcode"
+          type="text"
+          formControlName="barcode"
+          placeholder="Escanea o escribe el código">
       </div>
 
       <div class="form-group">
-        <label>Nombre del Producto *</label>
-        <input type="text" formControlName="name" placeholder="Ej: Alfajor Oreo">
+        <label for="name">Nombre del Producto *</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Ej: Alfajor Oreo">
+
         @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
-          <small class="error-text">El nombre debe tener al menos 3 caracteres</small>
+          <small class="error-text">El nombre es obligatorio (mínimo 3 caracteres)</small>
         }
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label>Precio Compra ($) *</label>
-          <input type="number" formControlName="buyPrice">
+          <label for="buyPrice">Precio Compra ($) *</label>
+          <input id="buyPrice" type="number" formControlName="buyPrice" placeholder="0.00">
         </div>
         <div class="form-group">
-          <label>Precio Venta ($) *</label>
-          <input type="number" formControlName="sellPrice">
+          <label for="sellPrice">Precio Venta ($) *</label>
+          <input id="sellPrice" type="number" formControlName="sellPrice" placeholder="0.00">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label>Cantidad (Stock) *</label>
-          <input type="number" formControlName="stock">
+          <label for="stock">Cantidad (Stock) *</label>
+          <input id="stock" type="number" formControlName="stock" placeholder="0">
         </div>
         <div class="form-group">
-          <label>Categoría (Opcional)</label>
-          <input type="text" formControlName="category" placeholder="Ej: Golosinas">
+          <label for="category">Categoría (Opcional)</label>
+          <input id="category" type="text" formControlName="category" placeholder="Ej: Bebidas">
         </div>
       </div>
 
       <div class="form-group">
-  <label>Imagen del Producto</label>
-  <div class="file-upload">
-    <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput hidden>
-    
-    <button type="button" class="btn-upload" (click)="fileInput.click()">
-      {{ selectedFile ? 'Cambiar Imagen' : 'Seleccionar Imagen' }}
-    </button>
+        <label>Imagen del Producto</label>
 
-    @if (selectedFile) {
-      <span class="file-name">{{ selectedFile.name }}</span>
-    }
-  </div>
+        <div class="image-upload-container">
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            #fileInput
+            hidden>
 
-  @if (imagePreview) {
-    <div class="preview-container">
-      <img [src]="imagePreview" alt="Vista previa">
-      <button type="button" class="btn-remove" (click)="removeImage()">Eliminar</button>
-    </div>
-  }
-</div>
+          <div class="upload-actions">
+            <button
+              type="button"
+              class="btn-upload"
+              (click)="fileInput.click()">
+              <i class="icon-upload"></i>
+              {{ selectedFile() ? 'Cambiar Imagen' : 'Subir Imagen' }}
+            </button>
 
-     
+            @if (selectedFile()) {
+              <span class="file-info">{{ selectedFile()?.name }}</span>
+            }
+          </div>
+
+          @if (imagePreview()) {
+            <div class="image-preview">
+              <img [src]="imagePreview()" alt="Vista previa del producto">
+              <button
+                type="button"
+                class="btn-delete-img"
+                (click)="removeImage()"
+                title="Quitar imagen">
+                &times;
+              </button>
+            </div>
+          }
+        </div>
+      </div>
 
       <div class="form-actions">
-        <button type="button" class="btn-secondary" routerLink="/products">Cancelar</button>
-        <button type="submit" class="btn-primary" [disabled]="productForm.invalid">Guardar Producto</button>
+        <button
+          type="button"
+          class="btn-secondary"
+          routerLink="/products">
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="productForm.invalid">
+          Guardar Producto
+        </button>
       </div>
+
     </form>
   </div>
 </div>

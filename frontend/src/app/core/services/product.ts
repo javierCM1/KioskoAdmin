@@ -11,23 +11,20 @@ export interface Product {
   buyPrice: number;
   sellPrice: number;
   category: string;
-  imagePath?: string; 
+  imagePath?: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ProductService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/products'; 
+  private apiUrl = 'http://localhost:3000/api/products';
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
   createProduct(formData: FormData): Observable<any> {
-  return this.http.post('/api/products', formData);
-}
-
-
+    // USA SIEMPRE LA VARIABLE apiUrl
+    return this.http.post(this.apiUrl, formData);
+  }
 }
